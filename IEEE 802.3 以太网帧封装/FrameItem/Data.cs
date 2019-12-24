@@ -16,6 +16,16 @@ namespace IEEE_802._3_以太网帧封装.FrameItem
         private byte[] data { get; set; }
 
         /// <summary>
+        /// 数据长度最小值（字节）
+        /// </summary>
+        public static int MinLength = 64;
+
+        /// <summary>
+        /// 数据长度最大值（字节）
+        /// </summary>
+        public static int MaxLength = 1500;
+
+        /// <summary>
         /// 限定数据格式为
         /// a1 b1 11 25
         /// 这样的格式
@@ -36,6 +46,7 @@ namespace IEEE_802._3_以太网帧封装.FrameItem
             {
                 errorMessage = "数据格式错误，数据用十六进制表示，每个字节的数据用空格分割开，如：0a 11 b4";
             }
+
             return result;
         }
 

@@ -54,7 +54,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrameItem\CRCGeneratingPolynomial.cs" />
     <Compile Include="FrameItem\Data.cs" />
+    <Compile Include="FrameItem\Frame.cs" />
+    <Compile Include="FrameItem\Type.cs" />
+    <Compile Include="MyForm\BinaryNumDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyForm\BinaryNumDialog.Designer.cs">
+      <DependentUpon>BinaryNumDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MyForm\DrawCRCForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +79,9 @@
     <Compile Include="FrameItem\MAC.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="MyForm\BinaryNumDialog.resx">
+      <DependentUpon>BinaryNumDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MyForm\DrawCRCForm.resx">
       <DependentUpon>DrawCRCForm.cs</DependentUpon>
     </EmbeddedResource>

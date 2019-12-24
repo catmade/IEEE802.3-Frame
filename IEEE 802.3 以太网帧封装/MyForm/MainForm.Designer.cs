@@ -40,6 +40,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbDataHex = new System.Windows.Forms.TextBox();
             this.btnGenRandomData = new System.Windows.Forms.Button();
+            this.tabpInput = new System.Windows.Forms.TableLayoutPanel();
+            this.lbCRCGP = new System.Windows.Forms.Label();
+            this.btnSetCRCGP = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -153,11 +156,47 @@
             this.btnGenRandomData.UseVisualStyleBackColor = true;
             this.btnGenRandomData.Click += new System.EventHandler(this.btnGenRandomData_Click);
             // 
+            // tabpInput
+            // 
+            this.tabpInput.ColumnCount = 1;
+            this.tabpInput.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tabpInput.Location = new System.Drawing.Point(167, 165);
+            this.tabpInput.Name = "tabpInput";
+            this.tabpInput.RowCount = 2;
+            this.tabpInput.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tabpInput.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tabpInput.Size = new System.Drawing.Size(30, 60);
+            this.tabpInput.TabIndex = 5;
+            this.tabpInput.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tabpInput_MouseClick);
+            // 
+            // lbCRCGP
+            // 
+            this.lbCRCGP.AutoSize = true;
+            this.lbCRCGP.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbCRCGP.Location = new System.Drawing.Point(150, 121);
+            this.lbCRCGP.Name = "lbCRCGP";
+            this.lbCRCGP.Size = new System.Drawing.Size(144, 19);
+            this.lbCRCGP.TabIndex = 7;
+            this.lbCRCGP.Text = "P(X) = x^3 + x³";
+            // 
+            // btnSetCRCGP
+            // 
+            this.btnSetCRCGP.Location = new System.Drawing.Point(23, 114);
+            this.btnSetCRCGP.Name = "btnSetCRCGP";
+            this.btnSetCRCGP.Size = new System.Drawing.Size(110, 37);
+            this.btnSetCRCGP.TabIndex = 8;
+            this.btnSetCRCGP.Text = "设置生成多项式";
+            this.btnSetCRCGP.UseVisualStyleBackColor = true;
+            this.btnSetCRCGP.Click += new System.EventHandler(this.btnSetCRCGP_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnSetCRCGP);
+            this.Controls.Add(this.lbCRCGP);
+            this.Controls.Add(this.tabpInput);
             this.Controls.Add(this.btnGenRandomData);
             this.Controls.Add(this.tbDataHex);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -184,6 +223,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnGenRandomData;
+        private System.Windows.Forms.TableLayoutPanel tabpInput;
+        private System.Windows.Forms.Label lbCRCGP;
+        private System.Windows.Forms.Button btnSetCRCGP;
     }
 }
 

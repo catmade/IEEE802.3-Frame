@@ -55,5 +55,59 @@ namespace IEEE_802._3_以太网帧封装.MyForm
         {
             this.tbDataHex.Text = Data.GetRandomData(100).ToString();
         }
+
+        private void tabpInput_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        #region 设置生成多项式
+
+        private static BinaryNumDialog binaryNumDialog = new BinaryNumDialog();
+
+        private void btnSetCRCGP_Click(object sender, EventArgs e)
+        {
+            // 显示弹窗并获取数据
+            if (binaryNumDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                lbCRCGP.Text = GenRCGP(binaryNumDialog.OneIndexs);
+            }
+        }
+
+        private string GenRCGP(int[] indexs) 
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("P(X) = ");
+
+            for (int i = 0; i < indexs.Length; i++)
+            {
+                builder.Append('x').Append(ConvertNumToSuperscript(indexs[i])).Append(" + ");
+            }
+
+            return builder.ToString().Substring(0, builder.Length - 3);
+        }
+
+        /// <summary>
+        /// 上标符号
+        /// </summary>
+        private static char[] eops = {'⁰','¹','²','³','⁴','⁵','⁶','⁷','⁸','⁹' };
+        /// <summary>
+        /// 将数字转为上标字符串
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        private string ConvertNumToSuperscript(int n)
+        {
+            var strs = n.ToString().ToCharArray();
+            var result = "";
+            for (int i = 0; i < strs.Length; i++)
+            {
+                result += eops[strs[i] - '0'];
+            }
+            return result;
+        }
+
+
+        #endregion
     }
 }
