@@ -41,6 +41,11 @@ namespace IEEE_802._3_以太网帧封装.MyForm
         }
         #endregion
 
+        /// <summary>
+        /// 随机数据发送改变后会调用此方法
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tbDataHex_TextChanged(object sender, EventArgs e)
         {
             string errorMessage;
@@ -51,14 +56,14 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             }
         }
 
+        /// <summary>
+        /// 生成随机数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnGenRandomData_Click(object sender, EventArgs e)
         {
             this.tbDataHex.Text = Data.GetRandomData(100).ToString();
-        }
-
-        private void tabpInput_MouseClick(object sender, MouseEventArgs e)
-        {
-
         }
 
         #region 设置生成多项式
@@ -74,6 +79,11 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             }
         }
 
+        /// <summary>
+        /// 将数据转化成生成多项式
+        /// </summary>
+        /// <param name="indexs"></param>
+        /// <returns></returns>
         private string GenRCGP(int[] indexs) 
         {
             StringBuilder builder = new StringBuilder();
@@ -87,10 +97,12 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             return builder.ToString().Substring(0, builder.Length - 3);
         }
 
+        #region 获取指定数字对应的上标字符串，即："123" -> "¹²³"
         /// <summary>
         /// 上标符号
         /// </summary>
         private static char[] eops = {'⁰','¹','²','³','⁴','⁵','⁶','⁷','⁸','⁹' };
+
         /// <summary>
         /// 将数字转为上标字符串
         /// </summary>
@@ -106,7 +118,7 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             }
             return result;
         }
-
+        #endregion
 
         #endregion
     }

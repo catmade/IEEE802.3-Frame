@@ -10,15 +10,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace IEEE_802._3_以太网帧封装.MyForm
-{
-    public partial class BinaryNumDialog : Form
-    {
-        public BinaryNumDialog()
+namespace IEEE_802._3_以太网帧封装.MyForm {
+    public partial class BinaryNumDialog : Form {
+        public BinaryNumDialog () {
+            InitializeComponent ();
+            InitTableLayoutPanel ();
+            InitLabel ();
+        }
+
+        /// <summary>
+        /// 修改渲染方式，用来欺骗自己，让自己以为可以优化渲染
+        /// </summary>
+        protected override CreateParams CreateParams
         {
-            InitializeComponent();
-            InitTableLayoutPanel();
-            InitLabel();
+            get
+            {
+                var cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
         }
 
         /// <summary>
@@ -65,8 +75,7 @@ namespace IEEE_802._3_以太网帧封装.MyForm
         /// </summary>
         private static Label[] lbIndexs = new Label[TotalByte * 8];
 
-        private void InitLabel()
-        {
+        private void InitLabel () {
             int inputIndex = lbInputs.Length - 1;
             int indexIndex = lbIndexs.Length - 1;
 
@@ -74,33 +83,28 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             bool putAsIndexLabel;
             bool putAsDivisionLabel;
 
-            for (int row = 0; row < tabPanel.RowCount; row++)
-            { 
+            for (int row = 0; row < tabPanel.RowCount; row++) {
                 // 偶数行用来控制输入
-                for (int column = 0; column < tabPanel.ColumnCount; column++)
-                {
+                for (int column = 0; column < tabPanel.ColumnCount; column++) {
                     putAsDivisionLabel = (column % 5 == 4);
-                    if (putAsDivisionLabel)
-                    {
+                    if (putAsDivisionLabel) {
                         continue;
                     }
 
                     putAsInputLabel = row % 2 != 1;
-                    if (putAsInputLabel)
-                    {
-                        lbInputs[inputIndex] = new Label();
-                        SetInputLabelStyle(ref lbInputs[inputIndex], inputIndex);
-                        tabPanel.Controls.Add(lbInputs[inputIndex], column, row);
+                    if (putAsInputLabel) {
+                        lbInputs[inputIndex] = new Label ();
+                        SetInputLabelStyle (ref lbInputs[inputIndex], inputIndex);
+                        tabPanel.Controls.Add (lbInputs[inputIndex], column, row);
                         inputIndex--;
                         continue;
                     }
 
                     putAsIndexLabel = row % 2 == 1;
-                    if (putAsIndexLabel)
-                    {
-                        lbIndexs[indexIndex] = new Label();
-                        SetIndexLabelStyle(ref lbIndexs[indexIndex], indexIndex);
-                        tabPanel.Controls.Add(lbIndexs[indexIndex], column, row);
+                    if (putAsIndexLabel) {
+                        lbIndexs[indexIndex] = new Label ();
+                        SetIndexLabelStyle (ref lbIndexs[indexIndex], indexIndex);
+                        tabPanel.Controls.Add (lbIndexs[indexIndex], column, row);
                         indexIndex--;
                         continue;
                     }
@@ -108,14 +112,13 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             }
         }
 
-        private void SetInputLabelStyle(ref Label lable, int index)
-        {
+        private void SetInputLabelStyle (ref Label lable, int index) {
             lable.AutoSize = true;
             lable.Dock = System.Windows.Forms.DockStyle.Fill;
-            lable.Font = new System.Drawing.Font("Consolas", 18F);
-            lable.Location = new System.Drawing.Point(0, 0);
-            lable.Margin = new System.Windows.Forms.Padding(0);
-            lable.Size = new System.Drawing.Size(20, 40);
+            lable.Font = new System.Drawing.Font ("Consolas", 18F);
+            lable.Location = new System.Drawing.Point (0, 0);
+            lable.Margin = new System.Windows.Forms.Padding (0);
+            lable.Size = new System.Drawing.Size (20, 40);
             lable.Text = "0";
             lable.MouseClick += Lable_MouseClick;
             lable.MouseEnter += Lable_MouseEnter;
@@ -123,74 +126,58 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             lable.Tag = index;
         }
 
-        private void Lable_MouseLeave(object sender, EventArgs e)
-        {
+        private void Lable_MouseLeave (object sender, EventArgs e) {
             var label = sender as Label;
-            lbInputs[int.Parse(label.Tag.ToString())].ForeColor = Label.DefaultForeColor;
+            lbInputs[int.Parse (label.Tag.ToString ())].ForeColor = Label.DefaultForeColor;
         }
 
-        private void Lable_MouseEnter(object sender, EventArgs e)
-        {
+        private void Lable_MouseEnter (object sender, EventArgs e) {
             var label = sender as Label;
-            lbInputs[int.Parse(label.Tag.ToString())].ForeColor = Color.DodgerBlue;
+            lbInputs[int.Parse (label.Tag.ToString ())].ForeColor = Color.DodgerBlue;
         }
 
-        private void SetIndexLabelStyle(ref Label lable, int index)
-        {
+        private void SetIndexLabelStyle (ref Label lable, int index) {
             lable.AutoSize = true;
             lable.Dock = System.Windows.Forms.DockStyle.Fill;
-            lable.Font = new System.Drawing.Font("Consolas", 8F);
-            lable.Location = new System.Drawing.Point(0, 0);
-            lable.Margin = new System.Windows.Forms.Padding(0);
-            lable.Size = new System.Drawing.Size(20, 40);
-            lable.Text = index.ToString().PadLeft(2);
+            lable.Font = new System.Drawing.Font ("Consolas", 8F);
+            lable.Location = new System.Drawing.Point (0, 0);
+            lable.Margin = new System.Windows.Forms.Padding (0);
+            lable.Size = new System.Drawing.Size (20, 40);
+            lable.Text = index.ToString ().PadLeft (2);
         }
 
-        private void Lable_MouseClick(object sender, MouseEventArgs e)
-        {
+        private void Lable_MouseClick (object sender, MouseEventArgs e) {
             var label = sender as Label;
-            if ("0".Equals(label.Text))
-            {
-                lbInputs[int.Parse(label.Tag.ToString())].Text = "1";
-            }
-            else
-            {
-                lbInputs[int.Parse(label.Tag.ToString())].Text = "0";
+            if ("0".Equals (label.Text)) {
+                lbInputs[int.Parse (label.Tag.ToString ())].Text = "1";
+            } else {
+                lbInputs[int.Parse (label.Tag.ToString ())].Text = "0";
             }
         }
 
-        private void InitTableLayoutPanel()
-        {
-            this.tabPanel.RowStyles.Clear();
-            this.tabPanel.ColumnStyles.Clear();
+        private void InitTableLayoutPanel () {
+            this.tabPanel.RowStyles.Clear ();
+            this.tabPanel.ColumnStyles.Clear ();
 
             this.tabPanel.RowCount = RowCount;
             // 添加行
-            for (int i = 0; i < RowCount; i++)
-            {
+            for (int i = 0; i < RowCount; i++) {
                 // 偶数行的字体比奇数行的字体大，行高要高一些
-                if (i % 2 == 0)
-                {
-                    this.tabPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, RowHeight));
-                } 
-                else
-                {
-                    this.tabPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, RowHeight / 2));
+                if (i % 2 == 0) {
+                    this.tabPanel.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Absolute, RowHeight));
+                } else {
+                    this.tabPanel.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Absolute, RowHeight / 2));
                 }
             }
 
             this.tabPanel.ColumnCount = ColumnCount;
             // 添加列
-            for (int i = 0; i < ColumnCount; i++)
-            {
+            for (int i = 0; i < ColumnCount; i++) {
                 // 每 4 列为一组，中间有分割，所以对应位置的列宽度要小一些
-                if (i % 5 == 4)
-                {
-                    this.tabPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, ColumnWidth / 2));
-                }
-                else
-                {
-                    this.tabPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, ColumnWidth));
+                if (i % 5 == 4) {
+                    this.tabPanel.ColumnStyles.Add (new System.Windows.Forms.ColumnStyle (System.Windows.Forms.SizeType.Absolute, ColumnWidth / 2));
+                } else {
+                    this.tabPanel.ColumnStyles.Add (new System.Windows.Forms.ColumnStyle (System.Windows.Forms.SizeType.Absolute, ColumnWidth));
                 }
             }
 
@@ -202,7 +189,23 @@ namespace IEEE_802._3_以太网帧封装.MyForm
         /// 数据
         /// Bytes[2]Bytes[1]Bytes[0]，高字节向低字节
         /// </summary>
-        public byte[] Bytes { get; private set; } = new byte[TotalByte];
+        public byte[] Bytes {
+            get {
+                var result = new byte[TotalByte];
+                StringBuilder builder = new StringBuilder ();
+                for (int i = lbInputs.Length - 1; i >= 0; i--) {
+                    builder.Append (lbInputs[i].Text);
+                }
+
+                string str = builder.ToString ();
+                for (int i = 0; i < result.Length; i++) {
+                    string str1 = str.Substring (i * 8, 8);
+                    result[result.Length - 1 - i] = Convert.ToByte (str1, 2);
+                }
+
+                return result;
+            }
+        }
 
         /// <summary>
         /// 数值的大小
@@ -210,58 +213,38 @@ namespace IEEE_802._3_以太网帧封装.MyForm
         public long Num {
             get {
                 long num = 0;
-                for (int i = 0; i < Bytes.Length; i++)
-                {
-                    num += Bytes[i] * (long)Math.Pow(2, i * 8);
+                for (int i = 0; i < Bytes.Length; i++) {
+                    num += Bytes[i] * (long) Math.Pow (2, i * 8);
                 }
                 return num;
-            } 
+            }
         }
 
         /// <summary>
         /// 数值为 1 的位置下标
         /// </summary>
-        public int[] OneIndexs
-        {
-            get
-            {
-                List<int> result = new List<int>();
+        public int[] OneIndexs {
+            get {
+                List<int> result = new List<int> ();
 
-                for (int i = lbInputs.Length - 1; i >= 0; i--)
-                {
-                    if ("1".Equals(lbInputs[i].Text))
-                    {
-                        result.Add(i);
+                for (int i = lbInputs.Length - 1; i >= 0; i--) {
+                    if ("1".Equals (lbInputs[i].Text)) {
+                        result.Add (i);
                     }
                 }
 
-                return result.ToArray();
+                return result.ToArray ();
             }
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
-        {
-            StringBuilder builder = new StringBuilder();
-            for (int i = lbInputs.Length - 1; i >= 0; i--)
-            {
-                builder.Append(lbInputs[i].Text);
-            }
-
-            string str = builder.ToString();
-            for (int i = 0; i < Bytes.Length; i++)
-            {
-                string str1 = str.Substring(i * 8, 8);
-                Bytes[Bytes.Length - 1 - i] = Convert.ToByte(str1, 2);
-            }
-
+        private void btnOk_Click (object sender, EventArgs e) {
             this.DialogResult = DialogResult.OK;
-            this.Close();
+            this.Close ();
         }
 
-        private void btnCancle_Click(object sender, EventArgs e)
-        {
+        private void btnCancle_Click (object sender, EventArgs e) {
             this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            this.Close ();
         }
     }
 }
