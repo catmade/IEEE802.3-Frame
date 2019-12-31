@@ -1,16 +1,16 @@
-﻿namespace IEEE_802._3_以太网帧封装.MyForm
+﻿namespace IEEE_802._3_以太网帧封装.MyUserContorl
 {
-    partial class DrawCRCForm
+    partial class DrawCRC
     {
-        /// <summary>
-        /// Required designer variable.
+        /// <summary> 
+        /// 必需的设计器变量。
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
+        /// <summary> 
+        /// 清理所有正在使用的资源。
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,15 +20,14 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region 组件设计器生成的代码
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// <summary> 
+        /// 设计器支持所需的方法 - 不要修改
+        /// 使用代码编辑器修改此方法的内容。
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DrawCRCForm));
             this.btnAction = new System.Windows.Forms.Button();
             this.btnSetCRCGP = new System.Windows.Forms.Button();
             this.lbCRCGP = new System.Windows.Forms.Label();
@@ -57,7 +56,7 @@
             // 
             this.btnAction.BackColor = System.Drawing.Color.MediumTurquoise;
             this.btnAction.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnAction.Location = new System.Drawing.Point(80, 133);
+            this.btnAction.Location = new System.Drawing.Point(167, 133);
             this.btnAction.Name = "btnAction";
             this.btnAction.Size = new System.Drawing.Size(88, 39);
             this.btnAction.TabIndex = 0;
@@ -94,7 +93,6 @@
             this.tbGenPol.Name = "tbGenPol";
             this.tbGenPol.Size = new System.Drawing.Size(213, 26);
             this.tbGenPol.TabIndex = 11;
-            this.tbGenPol.Text = "1101";
             // 
             // tbData
             // 
@@ -103,7 +101,6 @@
             this.tbData.Name = "tbData";
             this.tbData.Size = new System.Drawing.Size(242, 26);
             this.tbData.TabIndex = 11;
-            this.tbData.Text = "1010110";
             // 
             // label1
             // 
@@ -129,7 +126,7 @@
             // 
             this.btnCheck.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.btnCheck.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnCheck.Location = new System.Drawing.Point(191, 133);
+            this.btnCheck.Location = new System.Drawing.Point(261, 133);
             this.btnCheck.Name = "btnCheck";
             this.btnCheck.Size = new System.Drawing.Size(86, 39);
             this.btnCheck.TabIndex = 13;
@@ -140,6 +137,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -165,9 +163,9 @@
             this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.tbTimeOut);
             this.splitContainer1.Panel2.Controls.Add(this.tbProcess);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 450);
+            this.splitContainer1.Size = new System.Drawing.Size(800, 500);
             this.splitContainer1.SplitterDistance = 350;
-            this.splitContainer1.SplitterWidth = 6;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 3;
             // 
             // lbError
@@ -213,10 +211,10 @@
             // 
             // btnStop
             // 
-            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnStop.BackColor = System.Drawing.Color.LightCoral;
             this.btnStop.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnStop.Location = new System.Drawing.Point(11, 371);
+            this.btnStop.Location = new System.Drawing.Point(11, 407);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(59, 35);
             this.btnStop.TabIndex = 19;
@@ -229,7 +227,7 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Location = new System.Drawing.Point(139, 422);
+            this.label5.Location = new System.Drawing.Point(139, 455);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(29, 12);
             this.label5.TabIndex = 18;
@@ -240,7 +238,7 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Location = new System.Drawing.Point(9, 422);
+            this.label4.Location = new System.Drawing.Point(9, 455);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 12);
             this.label4.TabIndex = 18;
@@ -250,7 +248,7 @@
             // 
             this.tbTimeOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.tbTimeOut.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbTimeOut.Location = new System.Drawing.Point(68, 415);
+            this.tbTimeOut.Location = new System.Drawing.Point(68, 448);
             this.tbTimeOut.MaxLength = 5;
             this.tbTimeOut.Name = "tbTimeOut";
             this.tbTimeOut.Size = new System.Drawing.Size(65, 26);
@@ -267,21 +265,19 @@
             this.tbProcess.Multiline = true;
             this.tbProcess.Name = "tbProcess";
             this.tbProcess.ReadOnly = true;
-            this.tbProcess.Size = new System.Drawing.Size(434, 444);
+            this.tbProcess.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbProcess.Size = new System.Drawing.Size(431, 494);
             this.tbProcess.TabIndex = 0;
             this.tbProcess.WordWrap = false;
             // 
-            // DrawCRCForm
+            // DrawCRC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "DrawCRCForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CRC计算过程可视化";
+            this.Name = "DrawCRC";
+            this.Size = new System.Drawing.Size(800, 500);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -312,5 +308,6 @@
         private System.Windows.Forms.TextBox tbTimeOut;
         private System.Windows.Forms.Label lbError;
         private System.Windows.Forms.Button btnStop;
+
     }
 }

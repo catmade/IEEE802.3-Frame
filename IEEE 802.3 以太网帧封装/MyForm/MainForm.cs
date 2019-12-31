@@ -1,13 +1,6 @@
 ﻿using IEEE_802._3_以太网帧封装.FrameItem;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace IEEE_802._3_以太网帧封装.MyForm
@@ -16,7 +9,7 @@ namespace IEEE_802._3_以太网帧封装.MyForm
     {
         public MainForm()
         {
-            InitializeComponent(); 
+            InitializeComponent();
             lbCRCGP.Text = Frame.GenPol.ToString();
         }
 
@@ -28,6 +21,7 @@ namespace IEEE_802._3_以太网帧封装.MyForm
         private void btnGenRandomData_Click(object sender, EventArgs e)
         {
             this.senderPanel.GenAllRandom();
+            this.senderPanel.ClearFCS();
         }
 
         #region 设置生成多项式
@@ -41,40 +35,48 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             {
                 Frame.GenPol = CRCGeneratingPolynomial.Parse(binaryNumDialog.IndexsOfOne);
                 lbCRCGP.Text = Frame.GenPol.ToString();
+                this.senderPanel.ClearFCS();
             }
         }
         #endregion
 
         private void btnSend_Click(object sender, EventArgs e)
         {
+            if (!this.senderPanel.Frame.IsIntegrated)
+            {
+                MessageBox.Show("帧数据不完整，发送失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             tab.SelectedIndex = 1;
-            this.receiverPanel.Frame = this.senderPanel.Frame;
+            this.receiverPanel.Frame = this.senderPanel.Frame.Clone() as Frame;
         }
 
         private void btnCheck_Click(object sender, EventArgs e)
         {
-            var format = this.receiverPanel.Frame.CalcCRC();            // 正确的数据
-            var real = this.receiverPanel.Frame.FrameCheckSequence;     // 实际接收到的数据
-            bool equal = 
-                format[0] == real[0]
-                && format[0] == real[0]
-                && format[0] == real[0]
-                && format[0] == real[0];
-
-            if (!equal)
+            if (this.receiverPanel.Frame.NoError)
             {
-                MessageBox.Show("数据出现错误", "检测结果", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.lbCheckResult.Text = "数据没有错误";
+                this.lbCheckResult.ForeColor = Color.Green;
+                MessageBox.Show("数据没有错误", "检测结果", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            else
+            {
+                this.lbCheckResult.Text = "数据出现错误";
+                this.lbCheckResult.ForeColor = Color.Red;
+                MessageBox.Show("数据出现错误", "检测结果", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         private void btnCompleteData_Click(object sender, EventArgs e)
         {
+            if (!this.senderPanel.Frame.CanCalcCRC)
+            {
+                MessageBox.Show("帧数据不完整，无法进行计算", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             this.senderPanel.CalcFCS();
-        }
-
-        private void btnShowDrawCRCForm_Click(object sender, EventArgs e)
-        {
-            new DrawCRCForm().Show();
         }
     }
 }

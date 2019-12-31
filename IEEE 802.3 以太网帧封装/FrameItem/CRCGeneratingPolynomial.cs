@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace IEEE_802._3_以太网帧封装.FrameItem
 {
@@ -43,45 +39,9 @@ namespace IEEE_802._3_以太网帧封装.FrameItem
         /// <summary>
         /// 计算循环冗余码
         /// </summary>
-        /// <param name="destinationMac"></param>
-        /// <param name="sourceMac"></param>
-        /// <param name="length"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public byte[] CalcCRC(MAC destinationMac, MAC sourceMac, byte[] length, Data data)
-        {
-            // 后面填充 4 个 0 字节数据
-            return CalcCRC(destinationMac, sourceMac, length, data, new byte[] { 0, 0, 0, 0 });
-        }
-
-        /// <summary>
-        /// 计算循环冗余码
-        /// </summary>
-        /// <param name="destinationMac"></param>
-        /// <param name="sourceMac"></param>
-        /// <param name="length"></param>
-        /// <param name="data"></param>
-        /// <param name="fcs"></param>
-        /// <returns></returns>
-        public byte[] CalcCRC(MAC destinationMac, MAC sourceMac, byte[] length, Data data, byte[] fcs)
-        {
-            List<byte> list = new List<byte>();
-
-            list.AddRange(destinationMac.Bytes);
-            list.AddRange(sourceMac.Bytes);
-            list.AddRange(length);
-            list.AddRange(data.Bytes);
-            list.AddRange(fcs);
-
-            return CalcCRC(list.ToArray());
-        }
-
-        /// <summary>
-        /// 计算循环冗余码
-        /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        private byte[] CalcCRC(byte[] items)
+        public byte[] CalcCRC(byte[] items)
         {
             StringBuilder builder = new StringBuilder();
             foreach (var item in items)
@@ -99,94 +59,52 @@ namespace IEEE_802._3_以太网帧封装.FrameItem
         /// <returns></returns>
         private byte[] CalcCRC(string v)
         {
-            var data = new Queue<char>(v.ToArray());
+            var data = new Queue<char>(v.ToArray());    // 被除数
+            char[] divisor = binaryString.ToArray();    // 除数
+            Queue<char> S = new Queue<char>();          // 商
+            int width = divisor.Length;                 // 每次取 width 个字符进行异或运算
+            Queue<char> str = new Queue<char>();        // 每次取的长度为 width 的部分被除数
 
-            // 除数
-            char[] divisor = binaryString.ToArray();
-
-            // 商
-            Queue<char> S = new Queue<char>();
-
-            // 每次取 width 个字符进行异或运算
-            int width = divisor.Length;
-
-            // 被除数
-            Queue<char> str = new Queue<char>();
             // 获取前 width - 1 个字符，填入到str中
             for (int i = 0; i < width - 1; i++)
             {
                 str.Enqueue(data.Dequeue());
             }
 
-            char[] temp;
-
-            // delete. just for debug
-            int cursor = -1;
-            string strDivisor = new string(divisor);
-            string str0 = "00000000000000000000000000000000";
-            int totalWidth = divisor.Length + 1 + v.Length;
-            // delete
-
-            StringBuilder process = new StringBuilder();
-
             while (data.Count != 0)
             {
-                cursor++;
                 str.Enqueue(data.Dequeue());
 
                 if (str.First() == '0')
                 {
                     S.Enqueue('0');
                     str.Dequeue();
-
-                    process.Append(LongChar(width + 1 + cursor, ' '))
-                    .AppendLine(str0);
-                    //.AppendLine(LongChar(totalWidth - width - 1 - cursor - 32, '|'));
                 }
                 else
                 {
                     S.Enqueue('1');
-                    process.Append(LongChar(width + 1 + cursor, ' '))
-                    .AppendLine(strDivisor);
-                    //.AppendLine(LongChar(toktalWidth - width - 1 - cursor - 32, '|'));
 
-                    temp = str.ToArray();
+                    var temp = str.ToArray();
                     str.Clear();
 
                     for (int i = 1; i < temp.Length; i++)
                     {
                         str.Enqueue(temp[i] == divisor[i] ? '0' : '1');
                     }
-
                 }
-
-                process.Append(LongChar(width + 1 + cursor, ' '))
-                    .AppendLine(new string(str.ToArray()));
-                    //.AppendLine(LongChar(totalWidth - width - 1 - cursor - 32, '|'));
-
             }
 
-            File.WriteAllText("C://Users//Seven//Desktop//计算过程.txt",
-                new StringBuilder()
-                .AppendLine(LongChar(width + 1, ' ') + new string(S.ToArray()))
-                .AppendLine(new string(divisor.ToArray()) + '|' + v)
-                .AppendLine(process.ToString())
-                .ToString());
+            var res = new string(str.ToArray()).PadLeft(32, '0');
+
+            Debug.WriteLine("被除数" + v);
+            Debug.WriteLine("商    " + res);
+            Debug.WriteLine("\n");
 
             var result = new byte[4];
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < 32 - str.Count; i++)
-            {
-                builder.Append('0');
-            }
-            while (str.Count != 0)
-            {
-                builder.Append(str.Dequeue());
-            }
-
+            // 将字符串格式化为byte
             for (int i = 0; i < 4; i++)
             {
-                result[3 - i] = Convert.ToByte(builder.ToString().Substring(i * 8, 8), 2);
+                result[i] = Convert.ToByte(res.Substring(i * 8, 8), 2);
             }
 
             return result;

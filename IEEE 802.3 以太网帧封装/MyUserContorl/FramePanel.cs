@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
+﻿using IEEE_802._3_以太网帧封装.FrameItem;
+using System;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using IEEE_802._3_以太网帧封装.FrameItem;
-using System.Text.RegularExpressions;
 
 namespace IEEE_802._3_以太网帧封装
 {
@@ -22,15 +15,23 @@ namespace IEEE_802._3_以太网帧封装
         /// <summary>
         /// 面板模式
         /// </summary>
-        private Mode mode = Mode.Set;
+        private Mode mode = Mode.InputData;
 
         public Mode PanelMode
         {
             get { return mode; }
-            set { mode = value; }
+            set
+            {
+                mode = value;
+                if (mode == Mode.InputData)
+                {
+                    this.tbFCS.ReadOnly = true;
+                    this.tbDataLength.ReadOnly = true;
+                }
+            }
         }
 
-        #region 属性
+        #region 供使用者调用的方法
         /// <summary>
         /// 以太网帧
         /// </summary>
@@ -45,15 +46,24 @@ namespace IEEE_802._3_以太网帧封装
             set
             {
                 frame = value;
-                if (PanelMode == Mode.Check)
+                if (PanelMode == Mode.DisplayData)
                 {
                     this.tbDestinationAddr.Text = frame.DestinationMac.ToString();
                     this.tbSourceAddr.Text = frame.SourceMac.ToString();
-                    this.tbDataLength.Text = ByteArrayToHexStr(frame.Length);
+                    this.tbDataLength.Text = frame.Length.ToString();
                     this.tbDataHex.Text = frame.Data.ToString();
-                    this.tbFCS.Text = ByteArrayToHexStr(frame.FrameCheckSequence);
+                    this.tbFCS.Text = frame.FCS.ToString();
                 }
             }
+        }
+
+        /// <summary>
+        /// 将校验字段数据清空
+        /// </summary>
+        public void ClearFCS()
+        {
+            this.tbFCS.Text = "";
+            this.Frame.FCS = null;
         }
         #endregion
 
@@ -65,7 +75,7 @@ namespace IEEE_802._3_以太网帧封装
         /// <returns></returns>
         private static string ByteArrayToHexStr(params byte[] bytes)
         {
-            if(bytes == null || bytes.Length == 0)
+            if (bytes == null || bytes.Length == 0)
             {
                 return string.Empty;
             }
@@ -82,8 +92,11 @@ namespace IEEE_802._3_以太网帧封装
 
         public void CalcFCS()
         {
-            this.Frame.FrameCheckSequence = this.Frame.CalcCRC();
-            this.tbFCS.Text = ByteArrayToHexStr(this.Frame.FrameCheckSequence);
+            string errorMessage;
+            FCS fcs;
+            FCS.TryParse(this.Frame.CalcCRC(), out errorMessage, out fcs);
+            this.Frame.FCS = fcs;
+            this.tbFCS.Text = fcs.ToString();
         }
 
         #region 生成随机数据
@@ -106,9 +119,7 @@ namespace IEEE_802._3_以太网帧封装
 
         public void GenRandomData()
         {
-            // TODO
-            //GenRandomData(random.Next(Data.MinLength, Data.MaxLength));
-            GenRandomData(5);
+            GenRandomData(random.Next(Data.MinLength, Data.MaxLength));
         }
 
         public void GenRandomData(int length)
@@ -124,10 +135,16 @@ namespace IEEE_802._3_以太网帧封装
         #region 检查 MAC 地址字符串是否合法
         private void tbDestinationAddr_TextChanged(object sender, EventArgs e)
         {
+            if (mode == Mode.InputData)
+            {
+                ClearFCS();
+            }
+
             TextBox tb = sender as TextBox;
             string errorMessage;
             MAC mac;
             errorProvider1.SetError(tb, "");
+            this.Frame.DestinationMac = null;
 
             if (!MAC.TryParse(tb.Text, out errorMessage, out mac))
             {
@@ -136,21 +153,21 @@ namespace IEEE_802._3_以太网帧封装
             else
             {
                 this.Frame.DestinationMac = mac;
-                if (PanelMode == Mode.Set)
-                {
-                    // 重新计算FCS
-                    this.Frame.FrameCheckSequence = this.Frame.CalcCRC();
-                    this.tbFCS.Text = ByteArrayToHexStr(this.Frame.FrameCheckSequence);
-                }
             }
         }
 
         private void tbSourceAddr_TextChanged(object sender, EventArgs e)
         {
+            if (mode == Mode.InputData)
+            {
+                ClearFCS();
+            }
+
             TextBox tb = sender as TextBox;
             string errorMessage;
             MAC mac;
             errorProvider1.SetError(tb, "");
+            this.Frame.SourceMac = null;
 
             if (!MAC.TryParse(tb.Text, out errorMessage, out mac))
             {
@@ -159,12 +176,6 @@ namespace IEEE_802._3_以太网帧封装
             else
             {
                 this.Frame.SourceMac = mac;
-                if (PanelMode == Mode.Set)
-                {
-                    // 重新计算FCS
-                    this.Frame.FrameCheckSequence = this.Frame.CalcCRC();
-                    this.tbFCS.Text = ByteArrayToHexStr(this.Frame.FrameCheckSequence);
-                }
             }
         }
         #endregion
@@ -172,10 +183,16 @@ namespace IEEE_802._3_以太网帧封装
         #region 检查数据部分是否合法
         private void tbDataHex_TextChanged(object sender, EventArgs e)
         {
+            if(mode == Mode.InputData)
+            {
+                ClearFCS();
+            }
+
             TextBox tb = sender as TextBox;
             string errorMessage;
             Data data;
             errorProvider1.SetError(tb, "");
+            this.Frame.Data = null;
 
             if (!Data.TryParse(tb.Text, out errorMessage, out data))
             {
@@ -185,41 +202,70 @@ namespace IEEE_802._3_以太网帧封装
             {
                 this.Frame.Data = data;
 
-                // 设置长度字段
-                byte[] bytes = new byte[2];
-                int length = this.Frame.Data.Length;
-                bytes[0] = Convert.ToByte(length / 256);
-                bytes[1] = Convert.ToByte(length % 256);
-                this.Frame.Length = bytes;
-                this.tbDataLength.Text = ByteArrayToHexStr(this.Frame.Length);
-
-                if (PanelMode == Mode.Set)
+                if (mode == Mode.InputData)
                 {
-                    // 重新计算FCS
-                    this.Frame.FrameCheckSequence = this.Frame.CalcCRC();
-                    this.tbFCS.Text = ByteArrayToHexStr(this.Frame.FrameCheckSequence);
+                    Length len = new Length();
+                    Length.TryParse(this.Frame.Data.Length, out errorMessage, out len);
+                    this.Frame.Length = len;
+                    this.tbDataLength.Text = this.Frame.Length.ToString();
                 }
             }
         }
 
         #endregion
+
+        private void tbFCS_TextChanged(object sender, EventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            string errorMessage;
+            FCS fcs;
+            errorProvider1.SetError(tb, "");
+            this.Frame.FCS = null;
+
+            if (!FCS.TryParse(tb.Text, out errorMessage, out fcs))
+            {
+                errorProvider1.SetError(tb, errorMessage);
+            }
+            else
+            {
+                this.Frame.FCS = fcs;
+            }
+        }
+
+        private void tbDataLength_TextChanged(object sender, EventArgs e)
+        {
+            if (mode == Mode.InputData)
+            {
+                ClearFCS();
+            }
+
+            TextBox tb = sender as TextBox;
+            string errorMessage;
+            Length length;
+            errorProvider1.SetError(tb, "");
+            this.Frame.Length = null;
+
+            if (!Length.TryParse(tb.Text, out errorMessage, out length))
+            {
+                errorProvider1.SetError(tb, errorMessage);
+            }
+            else
+            {
+                this.Frame.Length = length;
+            }
+        }
     }
 
     public enum Mode
     {
         /// <summary>
-        /// 设置以太网帧的模式，会实时更新FCS，如果实时更新，对性能要求比较高
+        /// 输入数据的模式，会根据数据长度的变化自动设置长度字段的值
         /// </summary>
-        Set,
+        InputData,
 
         /// <summary>
-        /// 设置以太网帧的模式，不会实时更新FCS
+        /// 显示数据的模式，仅将数据显示出来，不会检查长度字段的值是否正确
         /// </summary>
-        Silence,
-
-        /// <summary>
-        /// 检查以太网帧的模式
-        /// </summary>
-        Check
+        DisplayData
     }
 }

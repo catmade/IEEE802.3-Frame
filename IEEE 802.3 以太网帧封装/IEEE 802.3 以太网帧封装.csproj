@@ -59,19 +59,20 @@
   <ItemGroup>
     <Compile Include="FrameItem\CRCGeneratingPolynomial.cs" />
     <Compile Include="FrameItem\Data.cs" />
+    <Compile Include="FrameItem\FCS.cs" />
     <Compile Include="FrameItem\Frame.cs" />
-    <Compile Include="FrameItem\Type.cs" />
+    <Compile Include="FrameItem\Length.cs" />
+    <Compile Include="MyUserContorl\DrawCRC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyUserContorl\DrawCRC.Designer.cs">
+      <DependentUpon>DrawCRC.cs</DependentUpon>
+    </Compile>
     <Compile Include="MyUserContorl\FramePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MyUserContorl\FramePanel.Designer.cs">
       <DependentUpon>FramePanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MyForm\DrawCRCForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MyForm\DrawCRCForm.Designer.cs">
-      <DependentUpon>DrawCRCForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MyForm\MainForm.cs">
       <SubType>Form</SubType>
@@ -82,11 +83,11 @@
     <Compile Include="FrameItem\MAC.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MyForm\DrawCRCForm.resx">
-      <DependentUpon>DrawCRCForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MyForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyUserContorl\DrawCRC.resx">
+      <DependentUpon>DrawCRC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyUserContorl\FramePanel.resx">
       <DependentUpon>FramePanel.cs</DependentUpon>

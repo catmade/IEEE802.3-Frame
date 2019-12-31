@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace IEEE_802._3_以太网帧封装.FrameItem
 {
@@ -20,9 +16,9 @@ namespace IEEE_802._3_以太网帧封装.FrameItem
         /// <summary>
         /// 数据的字节数
         /// </summary>
-        public int Length 
+        public int Length
         {
-            get { return data.Length; } 
+            get { return data.Length; }
         }
 
         /// <summary>
@@ -72,7 +68,7 @@ namespace IEEE_802._3_以太网帧封装.FrameItem
             result = null;
             bool canParse = CanParse(str, out errorMessage);
 
-            if(canParse)
+            if (canParse)
             {
                 result = new Data();
                 var hexs = Regex.Split(str, "\\s+");

@@ -1,10 +1,7 @@
 ﻿using IEEE_802._3_以太网帧封装.MyForm;
 using IEEE_802._3_以太网帧封装.Properties;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace IEEE_802._3_以太网帧封装

@@ -1,9 +1,6 @@
 ﻿using IEEE_802._3_以太网帧封装.FrameItem;
-using IEEE_802._3_以太网帧封装.Properties;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,11 +9,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace IEEE_802._3_以太网帧封装.MyForm
+namespace IEEE_802._3_以太网帧封装.MyUserContorl
 {
-    public partial class DrawCRCForm : Form
+    public partial class DrawCRC : UserControl
     {
-        public DrawCRCForm()
+        public DrawCRC()
         {
             InitializeComponent();
             // 禁止编译器对跨线程访问做检查
@@ -67,6 +64,39 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             }
         }
 
+        #region 允许调用者自定义的属性
+        /// <summary>
+        /// 获取或设置拆分器的位置以像素为单位，从左边缘或上边缘的SplitContainer.
+        /// </summary>
+        public int SplitterDistance
+        {
+            get
+            {
+                return this.splitContainer1.SplitterDistance;
+            }
+            set
+            {
+                this.splitContainer1.SplitterDistance = value;
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置拆分器的宽度(以像素为单位)
+        /// </summary>
+        public int SplitterWidth
+        {
+            get
+            {
+                return this.splitContainer1.SplitterWidth;
+            }
+            set
+            {
+                this.splitContainer1.SplitterWidth = value;
+            }
+        }
+
+        #endregion
+
         private static BinaryNumInputDialog binaryDialog = new BinaryNumInputDialog();
 
         #region 按钮的监听事件
@@ -87,10 +117,14 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             }
         }
 
+        /// <summary>
+        /// 用来通知进程结束
+        /// </summary>
         private static CancellationTokenSource cts = new CancellationTokenSource();
 
         private void btnCheck_Click(object sender, EventArgs e)
         {
+            this.tbResult.Text = "";
             cts.Cancel();
             cts = new CancellationTokenSource();
             Task.Run(() => CalcCRC(Func.Check, cts.Token));
@@ -98,6 +132,7 @@ namespace IEEE_802._3_以太网帧封装.MyForm
 
         private void btnAction_Click(object sender, EventArgs e)
         {
+            this.tbResult.Text = "";
             cts.Cancel();
             cts = new CancellationTokenSource();
             Task.Run(() => CalcCRC(Func.Calc, cts.Token));
@@ -109,7 +144,6 @@ namespace IEEE_802._3_以太网帧封装.MyForm
         }
         #endregion
 
-
         #region 计算CRC
 
         /// <summary>
@@ -118,14 +152,22 @@ namespace IEEE_802._3_以太网帧封装.MyForm
         /// </summary>
         private void CalcCRC(Func func, CancellationToken token)
         {
-            this.tbResult.Text = "";
-
             var sourceData = Data;                  // 原始数据的拷贝
             char[] divisor = Divisor;               // 除数
-            if(sourceData == null || divisor == null)
+
+            #region 判断是否继续执行
+            if (sourceData == null || divisor == null)
             {
                 return;
             }
+
+            // 检验数据时，数据长度不能小于生成多项式的长度
+            if (func == Func.Check && sourceData.Length < divisor.Length)
+            {
+                MessageBox.Show("数据长度不能小于生成多项式的长度", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            #endregion
 
             if (func == Func.Calc)
             {
@@ -133,19 +175,19 @@ namespace IEEE_802._3_以太网帧封装.MyForm
                 sourceData = (new string(sourceData) + "".PadRight(Divisor.Length - 1, '0')).ToArray();
             }
 
-            var data = new Queue<char>(sourceData);
+            var data = new Queue<char>(sourceData); // 被除数
             Queue<char> S = new Queue<char>();      // 商
             int width = divisor.Length;             // 每次取 width 个字符进行异或运算
 
-            Queue<char> str = new Queue<char>();    // 被除数
+            Queue<char> str = new Queue<char>();    // 每次取的长度为 width 的部分被除数
             // 获取前 width - 1 个字符，填入到str中
             for (int i = 0; i < width - 1; i++)
             {
                 str.Enqueue(data.Dequeue());
             }
 
-            int cursor = -1;    // 只是为了显示计算过程用
-            StringBuilder process = new StringBuilder();        // 只是为了显示计算过程用
+            int cursor = -1;                                // 只是为了显示计算过程用
+            StringBuilder process = new StringBuilder();    // 只是为了显示计算过程用
 
             char[] temp;
             while (data.Count != 0)
@@ -194,6 +236,7 @@ namespace IEEE_802._3_以太网帧封装.MyForm
                 .ToString();        // 只是为了显示计算过程用
 
                 #endregion
+
                 Thread.Sleep(MilliSecondsTimeout);
                 if (token.IsCancellationRequested)
                 {   // 收到终止信号后，线程终止
@@ -233,9 +276,11 @@ namespace IEEE_802._3_以太网帧封装.MyForm
 
     }
 
+
     enum Func
     {
         Check,
         Calc
     }
+
 }
