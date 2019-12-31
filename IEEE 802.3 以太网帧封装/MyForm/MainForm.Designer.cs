@@ -46,14 +46,17 @@
             this.tabSenderPage = new System.Windows.Forms.TabPage();
             this.btnCompleteData = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
+            this.senderPanel = new IEEE_802._3_以太网帧封装.FramePanel();
             this.tabReceiverPage = new System.Windows.Forms.TabPage();
             this.btnCheck = new System.Windows.Forms.Button();
-            this.senderPanel = new IEEE_802._3_以太网帧封装.FramePanel();
             this.receiverPanel = new IEEE_802._3_以太网帧封装.FramePanel();
+            this.tabDrawCRCPage = new System.Windows.Forms.TabPage();
+            this.btnShowDrawCRCForm = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.tab.SuspendLayout();
             this.tabSenderPage.SuspendLayout();
             this.tabReceiverPage.SuspendLayout();
+            this.tabDrawCRCPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // errorProvider1
@@ -80,7 +83,6 @@
             this.lbCRCGP.Size = new System.Drawing.Size(72, 19);
             this.lbCRCGP.TabIndex = 7;
             this.lbCRCGP.Text = "P(X) = ";
-            this.lbCRCGP.Click += new System.EventHandler(this.lbCRCGP_Click);
             // 
             // btnSetCRCGP
             // 
@@ -96,6 +98,7 @@
             // 
             this.tab.Controls.Add(this.tabSenderPage);
             this.tab.Controls.Add(this.tabReceiverPage);
+            this.tab.Controls.Add(this.tabDrawCRCPage);
             this.tab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tab.Location = new System.Drawing.Point(0, 0);
             this.tab.Name = "tab";
@@ -139,6 +142,20 @@
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
+            // senderPanel
+            // 
+            frame1.Data = data1;
+            frame1.DestinationMac = mac1;
+            frame1.FrameCheckSequence = null;
+            frame1.Length = null;
+            frame1.SourceMac = mac2;
+            this.senderPanel.Frame = frame1;
+            this.senderPanel.Location = new System.Drawing.Point(8, 6);
+            this.senderPanel.Name = "senderPanel";
+            this.senderPanel.PanelMode = IEEE_802._3_以太网帧封装.Mode.Silence;
+            this.senderPanel.Size = new System.Drawing.Size(610, 330);
+            this.senderPanel.TabIndex = 9;
+            // 
             // tabReceiverPage
             // 
             this.tabReceiverPage.BackColor = System.Drawing.Color.LightSteelBlue;
@@ -161,20 +178,6 @@
             this.btnCheck.UseVisualStyleBackColor = true;
             this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
             // 
-            // senderPanel
-            // 
-            frame1.Data = data1;
-            frame1.DestinationMac = mac1;
-            frame1.FrameCheckSequence = null;
-            frame1.Length = null;
-            frame1.SourceMac = mac2;
-            this.senderPanel.Frame = frame1;
-            this.senderPanel.Location = new System.Drawing.Point(8, 6);
-            this.senderPanel.Name = "senderPanel";
-            this.senderPanel.PanelMode = IEEE_802._3_以太网帧封装.Mode.Silence;
-            this.senderPanel.Size = new System.Drawing.Size(610, 330);
-            this.senderPanel.TabIndex = 9;
-            // 
             // receiverPanel
             // 
             frame2.Data = data2;
@@ -188,6 +191,26 @@
             this.receiverPanel.PanelMode = IEEE_802._3_以太网帧封装.Mode.Check;
             this.receiverPanel.Size = new System.Drawing.Size(610, 330);
             this.receiverPanel.TabIndex = 0;
+            // 
+            // tabDrawCRCPage
+            // 
+            this.tabDrawCRCPage.Controls.Add(this.btnShowDrawCRCForm);
+            this.tabDrawCRCPage.Location = new System.Drawing.Point(4, 22);
+            this.tabDrawCRCPage.Name = "tabDrawCRCPage";
+            this.tabDrawCRCPage.Size = new System.Drawing.Size(684, 437);
+            this.tabDrawCRCPage.TabIndex = 2;
+            this.tabDrawCRCPage.Text = "循环冗余校验计算过程";
+            // 
+            // btnShowDrawCRCForm
+            // 
+            this.btnShowDrawCRCForm.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnShowDrawCRCForm.Location = new System.Drawing.Point(8, 3);
+            this.btnShowDrawCRCForm.Name = "btnShowDrawCRCForm";
+            this.btnShowDrawCRCForm.Size = new System.Drawing.Size(111, 55);
+            this.btnShowDrawCRCForm.TabIndex = 0;
+            this.btnShowDrawCRCForm.Text = "打开新窗口";
+            this.btnShowDrawCRCForm.UseVisualStyleBackColor = true;
+            this.btnShowDrawCRCForm.Click += new System.EventHandler(this.btnShowDrawCRCForm_Click);
             // 
             // MainForm
             // 
@@ -204,6 +227,7 @@
             this.tabSenderPage.ResumeLayout(false);
             this.tabSenderPage.PerformLayout();
             this.tabReceiverPage.ResumeLayout(false);
+            this.tabDrawCRCPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -216,11 +240,13 @@
         private System.Windows.Forms.TabControl tab;
         private System.Windows.Forms.TabPage tabSenderPage;
         private System.Windows.Forms.TabPage tabReceiverPage;
+        private System.Windows.Forms.TabPage tabDrawCRCPage;
         private FramePanel senderPanel;
         private FramePanel receiverPanel;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Button btnCheck;
         private System.Windows.Forms.Button btnCompleteData;
+        private System.Windows.Forms.Button btnShowDrawCRCForm;
     }
 }
 

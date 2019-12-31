@@ -58,7 +58,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 190F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 73F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 159F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 168F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 170F));
             this.tableLayoutPanel1.Controls.Add(this.tbSourceAddr, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.tbDestinationAddr, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.lbDestinationAddr, 2, 0);
@@ -85,7 +85,7 @@
             this.tbSourceAddr.Margin = new System.Windows.Forms.Padding(0);
             this.tbSourceAddr.MaxLength = 17;
             this.tbSourceAddr.Name = "tbSourceAddr";
-            this.tbSourceAddr.Size = new System.Drawing.Size(169, 26);
+            this.tbSourceAddr.Size = new System.Drawing.Size(170, 26);
             this.tbSourceAddr.TabIndex = 1;
             this.tbSourceAddr.TextChanged += new System.EventHandler(this.tbSourceAddr_TextChanged);
             // 
@@ -175,7 +175,7 @@
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(512, 6);
+            this.label7.Location = new System.Drawing.Point(513, 6);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 12);
             this.label7.TabIndex = 6;
@@ -207,7 +207,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 62F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 414F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 121F));
             this.tableLayoutPanel2.Controls.Add(this.tbDataLength, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.label7, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.label6, 1, 0);
@@ -246,7 +246,7 @@
             this.tbFCS.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.tbFCS.MaxLength = 11;
             this.tbFCS.Name = "tbFCS";
-            this.tbFCS.Size = new System.Drawing.Size(116, 26);
+            this.tbFCS.Size = new System.Drawing.Size(117, 26);
             this.tbFCS.TabIndex = 1;
             // 
             // tbDataHex

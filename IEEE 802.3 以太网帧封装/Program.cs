@@ -14,7 +14,7 @@ namespace IEEE_802._3_以太网帧封装
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
-        [STAThread]
+        [MTAThread]
         static void Main()
         {
             // 使用自己的字体
@@ -31,8 +31,7 @@ namespace IEEE_802._3_以太网帧封装
             Font font = new Font(privateFonts.Families[0], 12);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DrawCRCForm());
-            //Application.Run(new MainForm());
+            Application.Run(new MainForm());
         }
 
     }

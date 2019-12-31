@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,6 +23,7 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             Control.CheckForIllegalCrossThreadCalls = false;
         }
 
+        private static Regex regex = new Regex("^[0-1]+$");
         /// <summary>
         /// 生成多项式（除数）
         /// </summary>
@@ -29,6 +31,11 @@ namespace IEEE_802._3_以太网帧封装.MyForm
         {
             get
             {
+                if (!regex.IsMatch(this.tbGenPol.Text))
+                {
+                    MessageBox.Show("生成多项式格式错误，应当为二进制字符串", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+                }
                 return this.tbGenPol.Text.ToArray();
             }
         }
@@ -40,6 +47,11 @@ namespace IEEE_802._3_以太网帧封装.MyForm
         {
             get
             {
+                if (!regex.IsMatch(this.tbData.Text))
+                {
+                    MessageBox.Show("数据格式错误，应当为二进制字符串", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+                }
                 return this.tbData.Text.ToArray();
             }
         }
@@ -88,18 +100,17 @@ namespace IEEE_802._3_以太网帧封装.MyForm
         {
             cts.Cancel();
             cts = new CancellationTokenSource();
-            this.tbData.Text += "".PadLeft(Divisor.Length - 1, '0');
             Task.Run(() => CalcCRC(Func.Calc, cts.Token));
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            cts.Cancel();
         }
         #endregion
 
 
         #region 计算CRC
-
-        /// <summary>
-        /// 指示线程是否继续执行
-        /// </summary>
-        bool stop = false;
 
         /// <summary>
         /// 计算CRC
@@ -110,8 +121,19 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             this.tbResult.Text = "";
 
             var sourceData = Data;                  // 原始数据的拷贝
-            var data = new Queue<char>(sourceData);
             char[] divisor = Divisor;               // 除数
+            if(sourceData == null || divisor == null)
+            {
+                return;
+            }
+
+            if (func == Func.Calc)
+            {
+                // 在后面补 0
+                sourceData = (new string(sourceData) + "".PadRight(Divisor.Length - 1, '0')).ToArray();
+            }
+
+            var data = new Queue<char>(sourceData);
             Queue<char> S = new Queue<char>();      // 商
             int width = divisor.Length;             // 每次取 width 个字符进行异或运算
 
@@ -128,11 +150,6 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             char[] temp;
             while (data.Count != 0)
             {
-                if (stop)
-                {
-                    return;
-                }
-
                 cursor++;
                 str.Enqueue(data.Dequeue());
 

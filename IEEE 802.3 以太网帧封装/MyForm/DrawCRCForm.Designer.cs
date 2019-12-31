@@ -38,14 +38,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnCheck = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lbError = new System.Windows.Forms.Label();
+            this.btnSetData = new System.Windows.Forms.Button();
             this.tbResult = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnSetData = new System.Windows.Forms.Button();
-            this.tbProcess = new System.Windows.Forms.TextBox();
-            this.tbTimeOut = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.btnStop = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.lbError = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbTimeOut = new System.Windows.Forms.TextBox();
+            this.tbProcess = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -159,6 +160,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.btnStop);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.tbTimeOut);
@@ -167,6 +169,28 @@
             this.splitContainer1.SplitterDistance = 350;
             this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 3;
+            // 
+            // lbError
+            // 
+            this.lbError.AutoSize = true;
+            this.lbError.BackColor = System.Drawing.SystemColors.Control;
+            this.lbError.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbError.Location = new System.Drawing.Point(47, 237);
+            this.lbError.Name = "lbError";
+            this.lbError.Size = new System.Drawing.Size(15, 21);
+            this.lbError.TabIndex = 17;
+            this.lbError.Text = " ";
+            // 
+            // btnSetData
+            // 
+            this.btnSetData.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnSetData.Location = new System.Drawing.Point(299, 89);
+            this.btnSetData.Name = "btnSetData";
+            this.btnSetData.Size = new System.Drawing.Size(48, 23);
+            this.btnSetData.TabIndex = 16;
+            this.btnSetData.Text = "设置";
+            this.btnSetData.UseVisualStyleBackColor = true;
+            this.btnSetData.Click += new System.EventHandler(this.btnSetData_Click);
             // 
             // tbResult
             // 
@@ -187,16 +211,51 @@
             this.label3.TabIndex = 14;
             this.label3.Text = "结果";
             // 
-            // btnSetData
+            // btnStop
             // 
-            this.btnSetData.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSetData.Location = new System.Drawing.Point(299, 89);
-            this.btnSetData.Name = "btnSetData";
-            this.btnSetData.Size = new System.Drawing.Size(48, 23);
-            this.btnSetData.TabIndex = 16;
-            this.btnSetData.Text = "设置";
-            this.btnSetData.UseVisualStyleBackColor = true;
-            this.btnSetData.Click += new System.EventHandler(this.btnSetData_Click);
+            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStop.BackColor = System.Drawing.Color.LightCoral;
+            this.btnStop.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnStop.Location = new System.Drawing.Point(11, 371);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(59, 35);
+            this.btnStop.TabIndex = 19;
+            this.btnStop.Text = "停止";
+            this.btnStop.UseVisualStyleBackColor = false;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Location = new System.Drawing.Point(139, 422);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(29, 12);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "毫秒";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Location = new System.Drawing.Point(9, 422);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "每步延时";
+            // 
+            // tbTimeOut
+            // 
+            this.tbTimeOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbTimeOut.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbTimeOut.Location = new System.Drawing.Point(68, 415);
+            this.tbTimeOut.MaxLength = 5;
+            this.tbTimeOut.Name = "tbTimeOut";
+            this.tbTimeOut.Size = new System.Drawing.Size(65, 26);
+            this.tbTimeOut.TabIndex = 17;
+            this.tbTimeOut.Text = "500";
             // 
             // tbProcess
             // 
@@ -208,53 +267,9 @@
             this.tbProcess.Multiline = true;
             this.tbProcess.Name = "tbProcess";
             this.tbProcess.ReadOnly = true;
-            this.tbProcess.Size = new System.Drawing.Size(438, 444);
+            this.tbProcess.Size = new System.Drawing.Size(434, 444);
             this.tbProcess.TabIndex = 0;
             this.tbProcess.WordWrap = false;
-            // 
-            // tbTimeOut
-            // 
-            this.tbTimeOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tbTimeOut.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbTimeOut.Location = new System.Drawing.Point(65, 416);
-            this.tbTimeOut.MaxLength = 5;
-            this.tbTimeOut.Name = "tbTimeOut";
-            this.tbTimeOut.Size = new System.Drawing.Size(65, 26);
-            this.tbTimeOut.TabIndex = 17;
-            this.tbTimeOut.Text = "500";
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Location = new System.Drawing.Point(6, 423);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 12);
-            this.label4.TabIndex = 18;
-            this.label4.Text = "每步延时";
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Location = new System.Drawing.Point(136, 423);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 12);
-            this.label5.TabIndex = 18;
-            this.label5.Text = "毫秒";
-            // 
-            // lbError
-            // 
-            this.lbError.AutoSize = true;
-            this.lbError.BackColor = System.Drawing.SystemColors.Control;
-            this.lbError.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbError.Location = new System.Drawing.Point(47, 237);
-            this.lbError.Name = "lbError";
-            this.lbError.Size = new System.Drawing.Size(15, 21);
-            this.lbError.TabIndex = 17;
-            this.lbError.Text = " ";
             // 
             // DrawCRCForm
             // 
@@ -296,5 +311,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbTimeOut;
         private System.Windows.Forms.Label lbError;
+        private System.Windows.Forms.Button btnStop;
     }
 }

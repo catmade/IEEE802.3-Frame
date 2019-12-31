@@ -61,12 +61,6 @@
     <Compile Include="FrameItem\Data.cs" />
     <Compile Include="FrameItem\Frame.cs" />
     <Compile Include="FrameItem\Type.cs" />
-    <Compile Include="MyForm\GuideForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MyForm\GuideForm.Designer.cs">
-      <DependentUpon>GuideForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="MyUserContorl\FramePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -90,9 +84,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MyForm\DrawCRCForm.resx">
       <DependentUpon>DrawCRCForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MyForm\GuideForm.resx">
-      <DependentUpon>GuideForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

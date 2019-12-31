@@ -72,9 +72,9 @@ namespace IEEE_802._3_以太网帧封装.MyForm
             this.senderPanel.CalcFCS();
         }
 
-        private void lbCRCGP_Click(object sender, EventArgs e)
+        private void btnShowDrawCRCForm_Click(object sender, EventArgs e)
         {
-
+            new DrawCRCForm().Show();
         }
     }
 }
