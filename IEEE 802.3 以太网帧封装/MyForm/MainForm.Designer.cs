@@ -29,125 +29,41 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            IEEE_802._3_以太网帧封装.FrameItem.Frame frame1 = new IEEE_802._3_以太网帧封装.FrameItem.Frame();
+            IEEE_802._3_以太网帧封装.FrameItem.Data data1 = new IEEE_802._3_以太网帧封装.FrameItem.Data();
+            IEEE_802._3_以太网帧封装.FrameItem.MAC mac1 = new IEEE_802._3_以太网帧封装.FrameItem.MAC();
+            IEEE_802._3_以太网帧封装.FrameItem.MAC mac2 = new IEEE_802._3_以太网帧封装.FrameItem.MAC();
+            IEEE_802._3_以太网帧封装.FrameItem.Frame frame2 = new IEEE_802._3_以太网帧封装.FrameItem.Frame();
+            IEEE_802._3_以太网帧封装.FrameItem.Data data2 = new IEEE_802._3_以太网帧封装.FrameItem.Data();
+            IEEE_802._3_以太网帧封装.FrameItem.MAC mac3 = new IEEE_802._3_以太网帧封装.FrameItem.MAC();
+            IEEE_802._3_以太网帧封装.FrameItem.MAC mac4 = new IEEE_802._3_以太网帧封装.FrameItem.MAC();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.tbDestinationMac = new System.Windows.Forms.TextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbSourceMac = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbDataHex = new System.Windows.Forms.TextBox();
             this.btnGenRandomData = new System.Windows.Forms.Button();
             this.lbCRCGP = new System.Windows.Forms.Label();
             this.btnSetCRCGP = new System.Windows.Forms.Button();
+            this.tab = new System.Windows.Forms.TabControl();
+            this.tabSenderPage = new System.Windows.Forms.TabPage();
+            this.btnCompleteData = new System.Windows.Forms.Button();
+            this.btnSend = new System.Windows.Forms.Button();
+            this.tabReceiverPage = new System.Windows.Forms.TabPage();
+            this.btnCheck = new System.Windows.Forms.Button();
+            this.senderPanel = new IEEE_802._3_以太网帧封装.FramePanel();
+            this.receiverPanel = new IEEE_802._3_以太网帧封装.FramePanel();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.tab.SuspendLayout();
+            this.tabSenderPage.SuspendLayout();
+            this.tabReceiverPage.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tbDestinationMac
-            // 
-            this.tbDestinationMac.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDestinationMac.Location = new System.Drawing.Point(3, 30);
-            this.tbDestinationMac.Name = "tbDestinationMac";
-            this.tbDestinationMac.Size = new System.Drawing.Size(168, 26);
-            this.tbDestinationMac.TabIndex = 0;
-            this.tbDestinationMac.Text = "9C-DA-3E-5B-22-95";
-            this.tbDestinationMac.TextChanged += new System.EventHandler(this.tbDestinationMac_TextChanged);
             // 
             // errorProvider1
             // 
             this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.errorProvider1.ContainerControl = this;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(171, 27);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "MAC destination";
-            // 
-            // tbSourceMac
-            // 
-            this.tbSourceMac.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbSourceMac.Location = new System.Drawing.Point(180, 30);
-            this.tbSourceMac.Name = "tbSourceMac";
-            this.tbSourceMac.Size = new System.Drawing.Size(168, 26);
-            this.tbSourceMac.TabIndex = 0;
-            this.tbSourceMac.Text = "9C-DA-3E-5B-22-95";
-            this.tbSourceMac.TextChanged += new System.EventHandler(this.tbSourceMac_TextChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(180, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(175, 27);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "MAC source";
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 181F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 167F));
-            this.tableLayoutPanel1.Controls.Add(this.label4, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tbDestinationMac, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tbSourceMac, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(23, 25);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 13F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(525, 67);
-            this.tableLayoutPanel1.TabIndex = 2;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(361, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(161, 27);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "CRC Checksum";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(361, 27);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(161, 40);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "00 10 10 11";
-            // 
-            // tbDataHex
-            // 
-            this.tbDataHex.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDataHex.Location = new System.Drawing.Point(23, 231);
-            this.tbDataHex.Multiline = true;
-            this.tbDataHex.Name = "tbDataHex";
-            this.tbDataHex.Size = new System.Drawing.Size(765, 207);
-            this.tbDataHex.TabIndex = 3;
-            this.tbDataHex.TextChanged += new System.EventHandler(this.tbDataHex_TextChanged);
-            // 
             // btnGenRandomData
             // 
-            this.btnGenRandomData.Location = new System.Drawing.Point(23, 202);
+            this.btnGenRandomData.Location = new System.Drawing.Point(411, 384);
             this.btnGenRandomData.Name = "btnGenRandomData";
             this.btnGenRandomData.Size = new System.Drawing.Size(93, 23);
             this.btnGenRandomData.TabIndex = 4;
@@ -159,15 +75,16 @@
             // 
             this.lbCRCGP.AutoSize = true;
             this.lbCRCGP.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbCRCGP.Location = new System.Drawing.Point(150, 121);
+            this.lbCRCGP.Location = new System.Drawing.Point(136, 339);
             this.lbCRCGP.Name = "lbCRCGP";
-            this.lbCRCGP.Size = new System.Drawing.Size(144, 19);
+            this.lbCRCGP.Size = new System.Drawing.Size(72, 19);
             this.lbCRCGP.TabIndex = 7;
-            this.lbCRCGP.Text = "P(X) = x^3 + x³";
+            this.lbCRCGP.Text = "P(X) = ";
+            this.lbCRCGP.Click += new System.EventHandler(this.lbCRCGP_Click);
             // 
             // btnSetCRCGP
             // 
-            this.btnSetCRCGP.Location = new System.Drawing.Point(23, 114);
+            this.btnSetCRCGP.Location = new System.Drawing.Point(20, 332);
             this.btnSetCRCGP.Name = "btnSetCRCGP";
             this.btnSetCRCGP.Size = new System.Drawing.Size(110, 37);
             this.btnSetCRCGP.TabIndex = 8;
@@ -175,41 +92,135 @@
             this.btnSetCRCGP.UseVisualStyleBackColor = true;
             this.btnSetCRCGP.Click += new System.EventHandler(this.btnSetCRCGP_Click);
             // 
+            // tab
+            // 
+            this.tab.Controls.Add(this.tabSenderPage);
+            this.tab.Controls.Add(this.tabReceiverPage);
+            this.tab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tab.Location = new System.Drawing.Point(0, 0);
+            this.tab.Name = "tab";
+            this.tab.SelectedIndex = 0;
+            this.tab.Size = new System.Drawing.Size(692, 463);
+            this.tab.TabIndex = 9;
+            // 
+            // tabSenderPage
+            // 
+            this.tabSenderPage.BackColor = System.Drawing.SystemColors.Info;
+            this.tabSenderPage.Controls.Add(this.btnCompleteData);
+            this.tabSenderPage.Controls.Add(this.btnSend);
+            this.tabSenderPage.Controls.Add(this.senderPanel);
+            this.tabSenderPage.Controls.Add(this.btnSetCRCGP);
+            this.tabSenderPage.Controls.Add(this.btnGenRandomData);
+            this.tabSenderPage.Controls.Add(this.lbCRCGP);
+            this.tabSenderPage.Location = new System.Drawing.Point(4, 22);
+            this.tabSenderPage.Name = "tabSenderPage";
+            this.tabSenderPage.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSenderPage.Size = new System.Drawing.Size(684, 437);
+            this.tabSenderPage.TabIndex = 0;
+            this.tabSenderPage.Text = "发送者";
+            // 
+            // btnCompleteData
+            // 
+            this.btnCompleteData.Location = new System.Drawing.Point(20, 384);
+            this.btnCompleteData.Name = "btnCompleteData";
+            this.btnCompleteData.Size = new System.Drawing.Size(130, 23);
+            this.btnCompleteData.TabIndex = 11;
+            this.btnCompleteData.Text = "纠正数据格式";
+            this.btnCompleteData.UseVisualStyleBackColor = true;
+            this.btnCompleteData.Click += new System.EventHandler(this.btnCompleteData_Click);
+            // 
+            // btnSend
+            // 
+            this.btnSend.Location = new System.Drawing.Point(543, 384);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(75, 23);
+            this.btnSend.TabIndex = 10;
+            this.btnSend.Text = "发送数据";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
+            // tabReceiverPage
+            // 
+            this.tabReceiverPage.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.tabReceiverPage.Controls.Add(this.btnCheck);
+            this.tabReceiverPage.Controls.Add(this.receiverPanel);
+            this.tabReceiverPage.Location = new System.Drawing.Point(4, 22);
+            this.tabReceiverPage.Name = "tabReceiverPage";
+            this.tabReceiverPage.Padding = new System.Windows.Forms.Padding(3);
+            this.tabReceiverPage.Size = new System.Drawing.Size(684, 437);
+            this.tabReceiverPage.TabIndex = 1;
+            this.tabReceiverPage.Text = "接收者";
+            // 
+            // btnCheck
+            // 
+            this.btnCheck.Location = new System.Drawing.Point(530, 342);
+            this.btnCheck.Name = "btnCheck";
+            this.btnCheck.Size = new System.Drawing.Size(75, 23);
+            this.btnCheck.TabIndex = 1;
+            this.btnCheck.Text = "检查数据";
+            this.btnCheck.UseVisualStyleBackColor = true;
+            this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
+            // 
+            // senderPanel
+            // 
+            frame1.Data = data1;
+            frame1.DestinationMac = mac1;
+            frame1.FrameCheckSequence = null;
+            frame1.Length = null;
+            frame1.SourceMac = mac2;
+            this.senderPanel.Frame = frame1;
+            this.senderPanel.Location = new System.Drawing.Point(8, 6);
+            this.senderPanel.Name = "senderPanel";
+            this.senderPanel.PanelMode = IEEE_802._3_以太网帧封装.Mode.Silence;
+            this.senderPanel.Size = new System.Drawing.Size(610, 330);
+            this.senderPanel.TabIndex = 9;
+            // 
+            // receiverPanel
+            // 
+            frame2.Data = data2;
+            frame2.DestinationMac = mac3;
+            frame2.FrameCheckSequence = null;
+            frame2.Length = null;
+            frame2.SourceMac = mac4;
+            this.receiverPanel.Frame = frame2;
+            this.receiverPanel.Location = new System.Drawing.Point(8, 6);
+            this.receiverPanel.Name = "receiverPanel";
+            this.receiverPanel.PanelMode = IEEE_802._3_以太网帧封装.Mode.Check;
+            this.receiverPanel.Size = new System.Drawing.Size(610, 330);
+            this.receiverPanel.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnSetCRCGP);
-            this.Controls.Add(this.lbCRCGP);
-            this.Controls.Add(this.btnGenRandomData);
-            this.Controls.Add(this.tbDataHex);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.ClientSize = new System.Drawing.Size(692, 463);
+            this.Controls.Add(this.tab);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IEEE 802.3 以太网帧封装演示";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.tab.ResumeLayout(false);
+            this.tabSenderPage.ResumeLayout(false);
+            this.tabSenderPage.PerformLayout();
+            this.tabReceiverPage.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox tbDestinationMac;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbSourceMac;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TextBox tbDataHex;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnGenRandomData;
         private System.Windows.Forms.Label lbCRCGP;
         private System.Windows.Forms.Button btnSetCRCGP;
+        private System.Windows.Forms.TabControl tab;
+        private System.Windows.Forms.TabPage tabSenderPage;
+        private System.Windows.Forms.TabPage tabReceiverPage;
+        private FramePanel senderPanel;
+        private FramePanel receiverPanel;
+        private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.Button btnCheck;
+        private System.Windows.Forms.Button btnCompleteData;
     }
 }
 

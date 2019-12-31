@@ -17,10 +17,12 @@ namespace IEEE_802._3_以太网帧封装.FrameItem
         /// </summary>
         private byte[] mac { get; set; }
 
+        public byte[] Bytes { get { return mac; } }
+
         /// <summary>
-        /// MAC 地址格式，用“ - ”分割
+        /// MAC 地址格式，用空格分隔
         /// </summary>
-        private static Regex regex = new Regex("^([A-Fa-f0-9]{2}-){5}[A-Fa-f0-9]{2}$");
+        private static Regex regex = new Regex("^([A-Fa-f0-9]{2} ){5}[A-Fa-f0-9]{2}$");
 
         public MAC()
         {
@@ -39,7 +41,7 @@ namespace IEEE_802._3_以太网帧封装.FrameItem
             bool result = regex.IsMatch(str);
             if (!result)
             {
-                errorMessage = "MAC 地址格式错误，正确的例子如：1C-D0-3-5B-22-95（大小写均可以）";
+                errorMessage = "MAC 地址格式错误，正确的例子如：1C D0 03 5B 22 95（大小写均可以）";
             }
             return result;
         }
@@ -59,7 +61,7 @@ namespace IEEE_802._3_以太网帧封装.FrameItem
             if (canParse)
             {
                 result = new MAC();
-                var hexs = str.Split('-');
+                var hexs = str.Split(' ');
                 for (int i = 0; i < 6; i++)
                 {
                     result.mac[i] = Convert.ToByte(hexs[i], 16);
@@ -74,7 +76,7 @@ namespace IEEE_802._3_以太网帧封装.FrameItem
             StringBuilder builder = new StringBuilder();
             foreach (var item in this.mac)
             {
-                builder.Append(item.ToString("X").PadLeft(2, '0')).Append('-');
+                builder.Append(item.ToString("X").PadLeft(2, '0')).Append(' ');
             }
             return builder.ToString().Substring(0, builder.Length - 1);
         }

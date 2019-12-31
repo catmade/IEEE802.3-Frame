@@ -9,32 +9,65 @@ namespace IEEE_802._3_以太网帧封装.FrameItem
     /// <summary>
     /// 以太网帧
     /// </summary>
-    class Frame
+    public class Frame
     {
+        /// <summary>
+        /// 生成多项式
+        /// </summary>
+        public static CRCGeneratingPolynomial GenPol =
+            CRCGeneratingPolynomial.Parse(new int[] { 32, 26, 23, 22, 26, 12, 11, 12, 8, 7, 5, 4, 2, 1, 0 });
+
+        /// <summary>
+        /// 前导码
+        /// </summary>
+        public static byte[] Preamble = { 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA };
+
+        /// <summary>
+        /// 帧前定界符
+        /// </summary>
+        public static byte SFD = 0xAB;
+
         /// <summary>
         /// 目的 MAC 地址
         /// </summary>
-        private MAC DestinationMac { get; set; }
+        public MAC DestinationMac { get; set; }
 
         /// <summary>
         /// 源 MAC 地址
         /// </summary>
-        private MAC SourceMac { get; set; }
+        public MAC SourceMac { get; set; }
 
         /// <summary>
-        /// 类型
+        /// 长度
         /// </summary>
-        private Type Type { get; set; }
+        public byte[] Length { get; set; }
 
         /// <summary>
         /// 数据部分
         /// </summary>
-        private Data Data { get; set; }
+        public Data Data { get; set; }
 
         /// <summary>
         /// 帧检验序列
         /// </summary>
-        private byte[] FrameCheckSequence { get; set; }
+        public byte[] FrameCheckSequence { get; set; }
 
+        /// <summary>
+        /// 根据数据再次计算循环冗余码
+        /// </summary>
+        /// <returns></returns>
+        public byte[] CalcCRC()
+        {
+            return GenPol.CalcCRC(DestinationMac, SourceMac, Length, Data);
+        }
+
+        /// <summary>
+        /// 获取检验结果
+        /// </summary>
+        /// <returns></returns>
+        public byte[] CheckCRC()
+        {
+            return GenPol.CalcCRC(DestinationMac, SourceMac, Length, Data, FrameCheckSequence);
+        }
     }
 }

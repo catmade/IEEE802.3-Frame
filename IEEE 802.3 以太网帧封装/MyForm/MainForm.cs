@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,45 +16,8 @@ namespace IEEE_802._3_以太网帧封装.MyForm
     {
         public MainForm()
         {
-            InitializeComponent();
-        }
-
-        #region 检测MAC地址合法性
-        private void tbDestinationMac_TextChanged(object sender, EventArgs e)
-        {
-            CheckMac(sender, e);
-        }
-
-        private void tbSourceMac_TextChanged(object sender, EventArgs e)
-        {
-            CheckMac(sender, e);
-        }
-
-        private void CheckMac(object sender, EventArgs e)
-        {
-            TextBox tb = sender as TextBox;
-            string errorMessage;
-            errorProvider1.SetError(tb, "");
-            if (!MAC.CanParse(tb.Text, out errorMessage))
-            {
-                errorProvider1.SetError((Control)sender, errorMessage);
-            }
-        }
-        #endregion
-
-        /// <summary>
-        /// 随机数据发送改变后会调用此方法
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tbDataHex_TextChanged(object sender, EventArgs e)
-        {
-            string errorMessage;
-            errorProvider1.SetError(tbDataHex, "");
-            if (!Data.CanParse(tbDataHex.Text, out errorMessage))
-            {
-                errorProvider1.SetError(tbDataHex, errorMessage);
-            }
+            InitializeComponent(); 
+            lbCRCGP.Text = Frame.GenPol.ToString();
         }
 
         /// <summary>
@@ -63,63 +27,54 @@ namespace IEEE_802._3_以太网帧封装.MyForm
         /// <param name="e"></param>
         private void btnGenRandomData_Click(object sender, EventArgs e)
         {
-            this.tbDataHex.Text = Data.GetRandomData(100).ToString();
+            this.senderPanel.GenAllRandom();
         }
 
         #region 设置生成多项式
 
-        private static BinaryNumDialog binaryNumDialog = new BinaryNumDialog();
+        private static BinaryNumInputDialog binaryNumDialog = new BinaryNumInputDialog();
 
         private void btnSetCRCGP_Click(object sender, EventArgs e)
         {
             // 显示弹窗并获取数据
             if (binaryNumDialog.ShowDialog(this) == DialogResult.OK)
             {
-                lbCRCGP.Text = GenRCGP(binaryNumDialog.OneIndexs);
+                Frame.GenPol = CRCGeneratingPolynomial.Parse(binaryNumDialog.IndexsOfOne);
+                lbCRCGP.Text = Frame.GenPol.ToString();
             }
-        }
-
-        /// <summary>
-        /// 将数据转化成生成多项式
-        /// </summary>
-        /// <param name="indexs"></param>
-        /// <returns></returns>
-        private string GenRCGP(int[] indexs) 
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("P(X) = ");
-
-            for (int i = 0; i < indexs.Length; i++)
-            {
-                builder.Append('x').Append(ConvertNumToSuperscript(indexs[i])).Append(" + ");
-            }
-
-            return builder.ToString().Substring(0, builder.Length - 3);
-        }
-
-        #region 获取指定数字对应的上标字符串，即："123" -> "¹²³"
-        /// <summary>
-        /// 上标符号
-        /// </summary>
-        private static char[] eops = {'⁰','¹','²','³','⁴','⁵','⁶','⁷','⁸','⁹' };
-
-        /// <summary>
-        /// 将数字转为上标字符串
-        /// </summary>
-        /// <param name="n"></param>
-        /// <returns></returns>
-        private string ConvertNumToSuperscript(int n)
-        {
-            var strs = n.ToString().ToCharArray();
-            var result = "";
-            for (int i = 0; i < strs.Length; i++)
-            {
-                result += eops[strs[i] - '0'];
-            }
-            return result;
         }
         #endregion
 
-        #endregion
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            tab.SelectedIndex = 1;
+            this.receiverPanel.Frame = this.senderPanel.Frame;
+        }
+
+        private void btnCheck_Click(object sender, EventArgs e)
+        {
+            var format = this.receiverPanel.Frame.CalcCRC();            // 正确的数据
+            var real = this.receiverPanel.Frame.FrameCheckSequence;     // 实际接收到的数据
+            bool equal = 
+                format[0] == real[0]
+                && format[0] == real[0]
+                && format[0] == real[0]
+                && format[0] == real[0];
+
+            if (!equal)
+            {
+                MessageBox.Show("数据出现错误", "检测结果", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnCompleteData_Click(object sender, EventArgs e)
+        {
+            this.senderPanel.CalcFCS();
+        }
+
+        private void lbCRCGP_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -15,6 +15,16 @@ namespace IEEE_802._3_以太网帧封装.FrameItem
     {
         private byte[] data { get; set; }
 
+        public byte[] Bytes { get { return data; } }
+
+        /// <summary>
+        /// 数据的字节数
+        /// </summary>
+        public int Length 
+        {
+            get { return data.Length; } 
+        }
+
         /// <summary>
         /// 数据长度最小值（字节）
         /// </summary>

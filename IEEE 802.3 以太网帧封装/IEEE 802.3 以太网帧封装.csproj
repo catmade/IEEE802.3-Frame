@@ -41,6 +41,9 @@
     <StartupObject>IEEE_802._3_以太网帧封装.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BinaryNumInputDialog">
+      <HintPath>..\..\..\..\..\..\Desktop\DesktopFiles\IDE\Visual Studio\C#窗体程序\BinaryNumInputDialog\BinaryNumInputDialog\bin\Release\BinaryNumInputDialog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -58,11 +61,17 @@
     <Compile Include="FrameItem\Data.cs" />
     <Compile Include="FrameItem\Frame.cs" />
     <Compile Include="FrameItem\Type.cs" />
-    <Compile Include="MyForm\BinaryNumDialog.cs">
+    <Compile Include="MyForm\GuideForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MyForm\BinaryNumDialog.Designer.cs">
-      <DependentUpon>BinaryNumDialog.cs</DependentUpon>
+    <Compile Include="MyForm\GuideForm.Designer.cs">
+      <DependentUpon>GuideForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyUserContorl\FramePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyUserContorl\FramePanel.Designer.cs">
+      <DependentUpon>FramePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="MyForm\DrawCRCForm.cs">
       <SubType>Form</SubType>
@@ -79,14 +88,17 @@
     <Compile Include="FrameItem\MAC.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MyForm\BinaryNumDialog.resx">
-      <DependentUpon>BinaryNumDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MyForm\DrawCRCForm.resx">
       <DependentUpon>DrawCRCForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MyForm\GuideForm.resx">
+      <DependentUpon>GuideForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MyForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyUserContorl\FramePanel.resx">
+      <DependentUpon>FramePanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
